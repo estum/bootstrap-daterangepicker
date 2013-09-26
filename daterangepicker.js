@@ -393,6 +393,7 @@
 
         show: function (e) {
             if (e) {
+                e.stopPropagation();
                 e.preventDefault();
             }
             
