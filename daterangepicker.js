@@ -409,7 +409,9 @@
 
         hide: function (e) {
             if (e) {
-                if (this.container.has(e.target).length || this.element.has(e.target).length) {
+                if (this.element.is(e.target) || 
+                    this.container.has(e.target).length || 
+                    this.element.has(e.target).length) {
                     return;
                 }
             }
