@@ -61,7 +61,7 @@
         if (this.element.is('input')) {
             this.element.on({
                 click: $.proxy(this.show, this),
-                focus: $.proxy(this.show, this)
+                //focus: $.proxy(this.show, this)
             });
         } else {
             this.element.on('click', $.proxy(this.show, this));
