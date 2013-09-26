@@ -392,27 +392,36 @@
         },
 
         show: function (e) {
-            this.container.show();
-            this.move();
-
             if (e) {
-                e.stopPropagation();
                 e.preventDefault();
             }
-
-            $(document).on('mousedown', $.proxy(this.hide, this));
-            this.element.trigger('shown', {target: e.target, picker: this});
+            
+            if (this.container.is(':hidden')) {
+                this.container.show();
+                this.move();
+                
+                this.element.trigger('shown', {target: e.target, picker: this});
+                $(document).on('mousedown', $.proxy(this.hide, this));
+            } else {
+                this.hide();
+            }
         },
 
         hide: function (e) {
+            if (e) {
+                if (this.container.has(e.target).length || this.element.has(e.target).length) {
+                    return;
+                }
+            }
+            
             this.container.hide();
-
+            
             if (!this.startDate.isSame(this.oldStartDate) || !this.endDate.isSame(this.oldEndDate))
                 this.notify();
-
+            
             this.oldStartDate = this.startDate.clone();
             this.oldEndDate = this.endDate.clone();
-
+            
             $(document).off('mousedown', this.hide);
             this.element.trigger('hidden', { picker: this });
         },
